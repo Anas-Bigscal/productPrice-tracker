@@ -30,7 +30,7 @@ label {
     color: #555;
 }
 
-input[type="text"] {
+input[type="text"],input[type="email"] {
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ddd;
