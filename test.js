@@ -29,6 +29,29 @@
 // console.log(getMainName(url1)); // Output: flipkart
 // console.log(getMainName(url2)); // Output: amazon
 // console.log(getMainName(url3)); // Output: amazon
-const productTitle = document.querySelector(titleSelector).innerText;
 
-const productPrice = document.querySelector(priceSelector).innerText;
+// const nodemailer = require("nodemailer");
+
+// let transporter = nodemailer.createTransport({
+//     service: "gmail",
+//     auth: {
+//         user: "sachin142322@gmail.com",
+//         pass: "gxqwljkxsklmqfxp"
+//     }
+// });
+
+// let mailOptions = {
+//     from: "sachin142322@gmail.com",
+//     to: "mohammadsami.bs@gmail.com",
+//     subject : "Leave Application",
+//     text: "Hello sir, can i request a leave for 2/1.5 hours early from my regular time as I'm not well because of sore throat, headache and body ache. My point of asking is that I was late in the morning due to personal reasons i was out with my father."
+// }
+
+// transporter.sendMail(mailOptions, (error, info) => {
+//     if (error) {
+//         console.log(":::::::::ERROR:::::",error);
+//     }
+//     else{
+//         console.log("Email sent:::::", info.response);
+//     }
+// });

@@ -1,7 +1,8 @@
 const puppeteer = require("puppeteer");
 const productDetailModel = require("../model/product.model");
 const selectors = require("../utils/selectors")
-const { getMainName ,scrapeProductData} = require("../utils/helper")
+const { getMainName, scrapeProductData } = require("../utils/helper")
+const { sendMail } = require("../utils/sendMail")
 
 exports.getProductPrice = async (req, res, next) => {
     try {
@@ -12,7 +13,7 @@ exports.getProductPrice = async (req, res, next) => {
 
         if (product) {
             console.log(":::::::::::::::::: DATA ALREADY EXIST ::::::::::::::::");
-            return res.send({message:"DATA ALREADY EXIST"});
+            return res.send({ message: "DATA ALREADY EXIST" });
         }
 
         productDetailModel.create(productData);
@@ -48,26 +49,39 @@ exports.getProductPrice = async (req, res, next) => {
 
 exports.getPrice = async (req, res, next) => {
     const data = await productDetailModel.find();
-    console.log("DATA::::::::::::::>>",data);
+    console.log("DATA::::::::::::::>>", data);
     const selectorsObj = selectors.selectorObj;
     // console.log(`========  selectorsObj=====>>> `, selectorsObj)
 
     for (const elem of data) {
         const websiteName = getMainName(elem.productLink);
-        console.log(`========  websiteName =====>>> `, websiteName);  
+        console.log(`\n\n========  websiteName =====>>> ${websiteName}`);
+        if (websiteName == "flipkart") continue;
         if (selectorsObj.hasOwnProperty(websiteName)) {
-            const { productTitle, productPrice } = selectorsObj[websiteName];
+            const { productTitle, productPrice, productImage } = selectorsObj[websiteName];
             // console.log(`========  productTitle=====>>> `, productTitle)
             // console.log(`========  productPrice =====>>> `, productPrice)
-            console.log(":::::::::::EMAIL-------===========",elem.userEmail);
-            console.log(":::::::::::RS -------===========",elem.productPrice);
-            const scrapedData = await scrapeProductData(elem.productLink, productTitle, productPrice);
+            console.log(":::::::::::EMAIL-------===========", elem.userEmail);
+            console.log(":::::::::::RS -------===========", elem.productPrice);
+            const scrapedData = await scrapeProductData(elem.productLink, productTitle, productPrice, productImage);
             scrapedData.productPrice = scrapedData.productPrice.replace("₹", "");
 
             console.log(`========  scrapedData=====>>> `, scrapedData.productPrice);
             console.log(`========  productPrice=====>>> `, elem.productPrice);
-            if (scrapedData.productPrice == elem.productPrice) {
-                console.log("HUM JEET GAYEEEEE");
+
+            if (scrapedData.productPrice < elem.productPrice) {
+
+                const sendData = {
+                    userEmail: elem.userEmail,
+                    productLink: elem.productLink,
+                    productTitle: scrapedData.productTitle,
+                    productMentionedPrice: elem.productPrice,
+                    productNewPrice: scrapedData.productPrice,
+                    productImage: scrapedData.productImage
+                }
+
+                // console.log(sendData);
+                await sendMail(sendData);
             }
         }
     }

@@ -17,7 +17,7 @@ exports.getMainName = (url) => {
     return websiteName;
 }
 
-exports.scrapeProductData = async function (url, titleSelector, priceSelector) {
+exports.scrapeProductData = async function (url, titleSelector, priceSelector, imageSelector) {
     // const PAGE_URL = "https://www.flipkart.com/sony-alpha-ilce-6100l-aps-c-mirrorless-camera-16-50-mm-power-zoom-lens-featuring-eye-af-4k-movie-recording/p/itmdc3e60ee35fb1?pid=CAMFM67HBBUJWA9Y&lid=LSTCAMFM67HBBUJWA9YEQYFI8&marketplace=FLIPKART&store=jek%2Fp31%2Ftrv&srno=b_1_1&otracker=browse&fm=organic&iid=b145c620-200b-42c4-83bd-e153e34d7a34.CAMFM67HBBUJWA9Y.SEARCH&ppt=None&ppn=None&ssid=wjoyq1ondc0000001716963084869";
     // const PAGE_URL = "https://www.flipkart.com/xiaomi-11i-hypercharge-5g-pacific-pearl-128-gb/p/itm495eaae251d5b?pid=MOBG9QWVHHSZS9HY&lid=LSTMOBG9QWVHHSZS9HYP30X9H&marketplace=FLIPKART&store=tyy%2F4io&srno=b_1_1&otracker=nmenu_sub_Electronics_0_Mi&iid=9b7ec196-3316-4281-b480-f80ea19ab3c0.MOBG9QWVHHSZS9HY.SEARCH&ssid=73gk2s7ec00000001716983432041";
     const PAGE_URL = url;
@@ -34,7 +34,7 @@ exports.scrapeProductData = async function (url, titleSelector, priceSelector) {
 
     await page.goto(PAGE_URL);
 
-    const data = await page.evaluate((titleSelector, priceSelector) => {
+    const data = await page.evaluate((titleSelector, priceSelector, imageSelector) => {
 
         // const productTitle = document.querySelector(
         //     "#container > div > div._39kFie.N3De93.JxFEK3._48O0EI > div.DOjaWF.YJG4Cf > div.DOjaWF.gdgoEp.col-8-12 > div:nth-child(2) > div > div:nth-child(1) > h1 > span.VU-ZEz"
@@ -48,10 +48,12 @@ exports.scrapeProductData = async function (url, titleSelector, priceSelector) {
 
         const productPrice = document.querySelector(priceSelector).innerText;
 
-        return { productTitle, productPrice }
+        const productImage = document.querySelector(imageSelector).src;
+
+        return { productTitle, productPrice ,productImage}
         // return { productTitle }
         // return { productPrice }
-    },titleSelector, priceSelector);
+    },titleSelector, priceSelector,imageSelector);
 
     // console.log("DATA============>>", data);
     await browser.close();
