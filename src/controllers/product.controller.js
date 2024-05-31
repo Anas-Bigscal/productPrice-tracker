@@ -56,7 +56,7 @@ exports.getPrice = async (req, res, next) => {
     for (const elem of data) {
         const websiteName = getMainName(elem.productLink);
         console.log(`\n\n========  websiteName =====>>> ${websiteName}`);
-        if (websiteName == "flipkart") continue;
+        if (websiteName == "amazon") continue;
         if (selectorsObj.hasOwnProperty(websiteName)) {
             const { productTitle, productPrice, productImage } = selectorsObj[websiteName];
             // console.log(`========  productTitle=====>>> `, productTitle)
