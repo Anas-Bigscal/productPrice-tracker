@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 
 exports.sendMail = async (data) => {
 
-    console.log(data);
+    // console.log(data);
     const sendMailTo = data.userEmail;
     const productLink = data.productLink;
     const productTitle = data.productTitle;
@@ -13,8 +13,8 @@ exports.sendMail = async (data) => {
     let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: "sachin142322@gmail.com",
-            pass: "gxqwljkxsklmqfxp"
+            user: "priceio.alert@gmail.com",
+            pass: "wxxr ivir qqgr kzyw"
         }
     });
 
