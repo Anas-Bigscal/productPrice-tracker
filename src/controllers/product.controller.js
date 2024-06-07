@@ -1,4 +1,3 @@
-const puppeteer = require("puppeteer");
 const productDetailModel = require("../model/product.model");
 const selectors = require("../utils/selectors")
 const { getMainName, scrapeProductData } = require("../utils/helper")
