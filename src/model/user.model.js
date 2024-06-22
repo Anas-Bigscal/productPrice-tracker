@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { getMaxListeners } = require("./product.model");
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -35,5 +34,14 @@ const userSchema = new mongoose.Schema({
         required: true
     }
 });
+
+userSchema.pre('save', async function(next){
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+});
+
+userSchema.methods.checkPassword = function(password){
+    return bcrypt.compare(password, this.password);
+};
 
 module.exports = mongoose.model("userModel",userSchema);
