@@ -3,6 +3,16 @@ const selectors = require("../utils/selectors")
 const { getMainName, scrapeProductData } = require("../utils/helper")
 const { sendMail } = require("../utils/sendMail")
 
+exports.getProduct = async (req, res, next) => {
+    try {
+        // RENDER PRODUCT PAGE
+        return res.render('');
+    } catch (error) {
+        next(error);
+        console.log("ERROR =====>>", error);
+    }
+}
+
 exports.getProductDetail = async (req, res, next) => {
     try {
         const productData = req.body;

@@ -6,7 +6,7 @@ const { authRouter } = require("./auth.route");
 const { productRouter } = require("./product.route");
 
 indexRouter.use("/auth", authRouter);
-indexRouter.use("/user/:userId",productRouter);
+indexRouter.use("/user",productRouter);
 
 
 exports.indexRouter = indexRouter;

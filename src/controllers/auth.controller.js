@@ -3,37 +3,39 @@ const userModel = require("../model/user.model");
 
 exports.addUser = (req, res) => {
     try {
-        // console.log('HERERERE');
         return res.render('register');
     } catch (error) {
-        // next(error);
+        next(error);
         console.log("ERROR =====>>", error);
     }
-    // res.render('register');
 }
 
 exports.addUserProcess = async (req, res, next) => {
-    const { username = "", email = "" } = req.body;
+    // const { username = "", email = "" } = req.body;
     try {
         //   const errors = req.flash('error');
+          const payload = req.body;
 
         //   if (errors) {
         const email = req.body.email;
         const isUserExist = await userModel.findOne({ email });
+        console.log(`======== :: isUserExist  =====>>> `, isUserExist)
 
         if (!isUserExist) {
-            await userModel.create(req.body);
-            return res.redirect('/auth/login');
+            await userModel.create(payload);
+
+            return res.render('login');
         }
         else {
-            const errors = ["Email already in use"];
-            return res.render("register", {
-                errors,
-                formData: {
-                    username,
-                    email
-                },
-            });
+            // const errors = ["Email already in use"];
+            // return res.render("register", {
+            //     errors,
+            //     formData: {
+            //         username,
+            //         email
+            //     },
+            // });
+            console.log("USER EXISTS");
         }
         //   }
     } catch (error) {

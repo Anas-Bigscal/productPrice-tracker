@@ -10,12 +10,14 @@ passport.use(
         passwordField: "password"
     }, async (email, password, cb) => {
         try {
+
             const validateEmail = await userModel.findOne({ email, isDelete: false });
             if (!validateEmail) throw createError(404, "Enter proper Credentials");
 
             const validatePassword = await validateEmail.checkPassword(password);
             if (!validatePassword) throw createError(404, "Enter proper Credentials");
 
+            cb(null, validateEmail);
         } catch (error) {
             cb(error);
         }
