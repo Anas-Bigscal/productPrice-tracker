@@ -7,9 +7,11 @@ const productPriceSchema = new mongoose.Schema({
     productPrice: {
         type: String
     },
-    userEmail: {
-        type: String
-    }
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "userModel",
+        required: true
+    },
 });
 
 module.exports = mongoose.model('productDetailModel',productPriceSchema)

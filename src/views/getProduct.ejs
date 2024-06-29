@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            position: relative;
+        }
+
+        .welcome-message {
+            font-size: 24px;
+            color: #007bff;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+        }
+
+        .logout-button {
+            position: absolute;
+            right: 20px;
+            padding: 10px 15px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .logout-button:hover {
+            background-color: #c82333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 22px);
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .products-section {
+            margin-top: 40px;
+        }
+
+        .products-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f8f8;
+        }
+
+        .icon {
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .icon.update {
+            color: #007bff;
+        }
+
+        .icon.delete {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-bar">
+            <div class="welcome-message">Welcome, USER</div>
+            <button class="logout-button"><a href="/auth/logout" style="text-decoration: none; color: white;">Logout</a></button>
+        </div>
+        <h1>Product Information</h1>
+        <form action="" method="POST">
+            <label for="productTitle">Product Title:</label>
+            <input type="text" id="product-title" name="productTitle" required>
+
+            <label for="productLink">Product Link:</label>
+            <input type="text" id="product-link" name="productLink" required>
+
+            <label for="productPrice">Product Price:</label>
+            <input type="text" id="product-price" name="productPrice" required>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="products-section">
+            <h2>Your Products</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Title</th>
+                        <th>Mentioned Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example row. Use EJS to dynamically render rows from DB data. -->
+                    <% product.forEach(product => { %>
+                        <tr>
+                            <td><a href="<%= product.productLink %>" target="_blank"><%= product.title %>L</a></td>
+                            <td><%= product.productPrice %></td>
+                            <td>
+                                <span class="icon update">✎</span>
+                                <span class="icon delete">🗑</span>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

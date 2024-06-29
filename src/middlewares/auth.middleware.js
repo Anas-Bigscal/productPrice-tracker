@@ -40,6 +40,7 @@ passport.deserializeUser(async (id, done) => {
 exports.isAuthenticated = (req, res, next) => {
     try {
         if (req.isAuthenticated()) return next();
+        return res.redirect('/auth/login');
     } catch (error) {
         next(error);
     }
@@ -47,7 +48,7 @@ exports.isAuthenticated = (req, res, next) => {
 
 exports.checkLogIn = (req, res, next) => {
     try {
-        if (req.isAuthenticated()) return res.send("INSIDE AUTH MIDLLEWARE UR LOGGED IN");
+        if (req.isAuthenticated()) return res.redirect("/user/getProductDetail");
         next();
     } catch (error) {
         next(error);

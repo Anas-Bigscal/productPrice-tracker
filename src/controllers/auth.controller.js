@@ -19,7 +19,7 @@ exports.addUserProcess = async (req, res, next) => {
         //   if (errors) {
         const email = req.body.email;
         const isUserExist = await userModel.findOne({ email });
-        console.log(`======== :: isUserExist  =====>>> `, isUserExist)
+        console.log(`======== :: isUserExist  =====>>> `, isUserExist);
 
         if (!isUserExist) {
             await userModel.create(payload);

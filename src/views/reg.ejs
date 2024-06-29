@@ -129,3 +129,160 @@
         </div>
     </div>
 </body>
+
+
+
+
+
+
+
+
+================== productPAge==========================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Information</title>
+    <style>
+        .container {
+            max-width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 22px);
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .products-section {
+            margin-top: 40px;
+        }
+
+        .products-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f8f8;
+        }
+
+        .icon {
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .icon.update {
+            color: #007bff;
+        }
+
+        .icon.delete {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Product Information</h1>
+        <form action="" method="POST">
+            <label for="productLink">Product Link:</label>
+            <input type="text" id="product-link" name="productLink" required>
+
+            <label for="productPrice">Product Price:</label>
+            <input type="text" id="product-price" name="productPrice" required>
+
+            <label for="userEmail">Your Email:</label>
+            <input type="email" id="email" name="userEmail" required>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="products-section">
+            <h2>Your Products</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product Title</th>
+                        <th>Product Image</th>
+                        <th>Mentioned Price</th>
+                        <th>New Price</th>
+                        <th>Product Link</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example row. Use EJS to dynamically render rows from DB data. -->
+                    <% products.forEach(product => { %>
+                    <tr>
+                        <td><%= product.title %></td>
+                        <td><img src="<%= product.image %>" alt="Product Image" style="width: 50px; height: auto;"></td>
+                        <td><%= product.mentionedPrice %></td>
+                        <td><%= product.newPrice %></td>
+                        <td><a href="<%= product.link %>">Link</a></td>
+                        <td>
+                            <span class="icon update">✎</span>
+                            <span class="icon delete">🗑</span>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

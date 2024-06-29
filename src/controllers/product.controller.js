@@ -1,12 +1,18 @@
 const productDetailModel = require("../model/product.model");
+const userModel = require("../model/user.model");
 const selectors = require("../utils/selectors")
 const { getMainName, scrapeProductData } = require("../utils/helper")
 const { sendMail } = require("../utils/sendMail")
 
 exports.getProduct = async (req, res, next) => {
     try {
+        const user = req.user[0];
+        // console.log(`======== :: user  =====>>> `,typeof user._id)
+        
+        const data = await productDetailModel.find({userId: user._id});
+        console.log("DATA=========>>>",data);
         // RENDER PRODUCT PAGE
-        return res.render('');
+        return res.render('getProduct',{product: data});
     } catch (error) {
         next(error);
         console.log("ERROR =====>>", error);
@@ -16,19 +22,20 @@ exports.getProduct = async (req, res, next) => {
 exports.getProductDetail = async (req, res, next) => {
     try {
         const productData = req.body;
-        // console.log(`========  productData=====>>> `, productData);
+        productData.userId = req.user[0]._id;
+        console.log(`========  productData=====>>> `, productData);
 
         const product = await productDetailModel.findOne({ ...productData });
 
-        if (product) {
-            console.log(":::::::::::::::::: DATA ALREADY EXIST ::::::::::::::::");
-            return res.send({ message: "DATA ALREADY EXIST" });
+        if (!product) {
+            productDetailModel.create(productData);
+            console.log("INSERTED============>>");
+            return res.send({ message: "SUCCESS", data: productData });
         }
-
-        productDetailModel.create(productData);
-
-        console.log("INSERTED============>>");
-        return res.send({ message: "SUCCESS", data: productData });
+        
+        
+        console.log(":::::::::::::::::: DATA ALREADY EXIST ::::::::::::::::");
+        return res.send({ message: "DATA ALREADY EXIST" });
 
     } catch (error) {
         console.log("ERROR ====>", error);

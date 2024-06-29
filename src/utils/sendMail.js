@@ -2,7 +2,6 @@ const nodemailer = require("nodemailer");
 
 exports.sendMail = async (data) => {
 
-    // console.log(data);
     const sendMailTo = data.userEmail;
     const productLink = data.productLink;
     const productTitle = data.productTitle;
